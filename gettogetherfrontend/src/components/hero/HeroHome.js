@@ -4,33 +4,26 @@ import styled from "styled-components";
 import Hero from "../../styled/Hero.css";
 import StyledRouterLinkWrapper from "../../styled/globals/styledRouterLink";
 
-class HeroHome extends Component {
-    render() {
-        return (
-            <Hero>
-                <FlexBox x={"space-between"}>
-                    <div>
-                        Logo
-                    </div>
-                    <FlexBox z={"column"} className={"auth-headers"}>
+const HeroHome = () => {
+    return (
+        <Hero>
+            <FlexBox x={"space-between"}>
+                <div>
+                    Logo
+                </div>
+                <FlexBox z={"column"} style={{paddingTop:'20px'}}>
+                        <StyledRouterLinkWrapper to={'/login'} linkName={"Login"} p={"home-link"}/>
 
-                            <StyledRouterLinkWrapper to={'/login'} linkName={"Login"}/>
-
-
-                            <StyledRouterLinkWrapper to={'/register'} linkName={"Register"}/>
-                
-                    </FlexBox>
+                        <StyledRouterLinkWrapper to={'/register'} linkName={"Register"} p={"home-link"}/>
                 </FlexBox>
-            </Hero>
-        );
-    }
+            </FlexBox>
+        </Hero>
+    );
+
 }
 
 const HeroContainerWrapper = styled(HeroHome)`
-    .auth-headers a{
-      padding:${setRem(30)};
-      font-size: ${setRem(25)};
-    }
+
 `
 
 
