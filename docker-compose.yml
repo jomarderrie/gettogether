@@ -1,0 +1,43 @@
+ services:
+  adminer:
+    image: adminer
+    depends_on: 
+      - db
+      - backend
+    restart: always
+    ports:
+      - 8888:8080
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'example' # TODO: Change this      
+    volumes:
+     - "./data:/var/lib/mysql:rw"
+  backend:
+    image: backend:latest
+    build: 
+      context: ./gettogetherbackend
+    depends_on: 
+      - db
+
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+    - CHOKIDAR_USEPOLLING=true
+    - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/gettogether?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true
+    - SPRING.DATASOURCE_USERNAME=root
+    - SPRING.DATASOURCE_PASSWORD=example 
+  frontend:
+    build: 
+      context: ./gettogetherfrontend/ 
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    restart: always
+    volumes: 
+      - ./gettogetherfrontend/src:/gettogetherfrontend/src
+      - ./gettogetherfrontend/node_modules:/gettogetherfrontend/node_modules
+    ports:
+      - 3000:3000
