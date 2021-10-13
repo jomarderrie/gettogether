@@ -5,7 +5,6 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import {GlobalsStyle} from "./styled/GlobalStyle";
 
-const NavBar = lazy(() => import("./components/navbar/HomeNavBar"))
 const Home = lazy(() => import("./pages/Home"));
 
 // const Loading = lazy(() => import("./components/Loading"));

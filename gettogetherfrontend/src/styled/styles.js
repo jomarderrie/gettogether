@@ -17,8 +17,10 @@ export const setFont = {
 
 
 export const FlexBox = styled.div`
-${(props) => setFlex({x: props.x, y: props.y})}
+${(props) => setFlex({x: props.x, y: props.y, z: props.z})}
 `
+
+
 
 export const setFlex = ({x = 'center', y = 'center', z = 'row'} = {}) => {
     return `
