@@ -2,6 +2,7 @@ import React, {useRef, useState} from "react";
 import {useForm} from "react-hook-form";
 import ReCAPTCHA from "react-google-recaptcha";
 import {FlexBox} from "../../styled/styles";
+import styled from "styled-components";
 
 export default function SignUpForm() {
     const {
@@ -61,16 +62,16 @@ export default function SignUpForm() {
                     ))}
                 </ul>
             )}
-            <FlexBox z={"column"}>
-                <label htmlFor="firstName">First Name:</label>
+            <FlexBoxContainerInput z={"column"}  y={"none"}>
+                <label htmlFor="firstName">First Name</label>
                 <input
                     {...register("firstName", {required: "This is required"})}
                     id="firstName"
                 />
                 {errors.firstName && <p>{errors.firstName.message}</p>}
-            </FlexBox>
-            <FlexBox z={"column"}>
-                <label htmlFor="lastName">Last Name:</label>
+            </FlexBoxContainerInput>
+            <FlexBoxContainerInput z={"column"}  y={"none"}>
+                <label htmlFor="lastName">Last Name</label>
                 <input
                     {...register("lastName", {
                         required: "This is required",
@@ -78,21 +79,94 @@ export default function SignUpForm() {
                     })}
                 />
                 {errors.lastName && <p>{errors.lastName.message}</p>}
-            </FlexBox>
+            </FlexBoxContainerInput>
 
-            <FlexBox z={"column"}>
-                <label htmlFor="email">Email:</label>
+            <FlexBoxContainerInput z={"column"} y={"none"}>
+
+                <label htmlFor="email">Email</label>
+
                 <input
                     {...register("email", {
                         required: "This is required",
-                        pattern:
+                        pattern: (value) =>{
+                            return (
+                                [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
+                                    pattern.test(value)
+                                ) || "must include lower, upper, number, and special chars"
+                            );
+                        },
                         maxLength: {value: 4, message: "Valid email"}
                     })}
                 />
-                {errors.lastName && <p>{errors.lastName.message}</p>}
-            </FlexBox>
+                {errors.email && <p>{errors.email.message}</p>}
+            </FlexBoxContainerInput>
+
+
+            <FlexBoxContainerInput z={"column"} y={"none"}>
+
+                <label htmlFor="Password">Password</label>
+
+                <input
+                    {...register("email", {
+                        required: "This is required",
+                        pattern: (value) =>{
+                            return (
+                                [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
+                                    pattern.test(value)
+                                ) || "must include lower, upper, number, and special chars"
+                            );
+                        },
+                        maxLength: {value: 4, message: "Valid email"}
+                    })}
+                />
+                {errors.email && <p>{errors.email.message}</p>}
+            </FlexBoxContainerInput>
+
+
+            <FlexBoxContainerInput  z={"row"} x={"flex-start"}>
+                <input
+                    type="checkbox"
+                    className={"checkbox-input"}
+                    {...register("terms",{required:"This is required"})}
+
+                    // type="checkbox"
+                    // name="terms"
+                    // id="terms"
+                    // ref={register({ required: "you must agree to terms" })}
+                />
+                <label htmlFor="terms" style={{paddingRight:"20px"}}>You must agree to our terms.</label>
+            </FlexBoxContainerInput>
+
+
+
+            <FlexBoxContainerInput z={"column"}>
+                <button type="submit" disabled={submitting}>
+                    Register
+                </button>
+                <p>When you "Continue", you agree to GetTogether's Terms of Service. We will manage information about you as described in our Privacy Policy, and Cookie Policy.</p>
+            </FlexBoxContainerInput>
 
         </form>
     );
 }
+// width420
+
+
+
+const FlexBoxContainerInput = styled(FlexBox)`
+  width: 640px;
+  padding: 10px;
+  .checkbox{
+    padding-left: 20px;
+  }
+  label{
+    color: #aba499;
+  }
+  input{
+    padding: 10px 8px;
+  }
+  p{
+    font-size: 10px;
+  }
+`
 

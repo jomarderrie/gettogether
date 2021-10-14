@@ -12,7 +12,7 @@ const HeroHome = () => {
                     <div>
                         Logo
                     </div>
-                    <FlexBox z={"column"} style={{paddingTop: '20px'}}>
+                    <FlexBox z={"row"} style={{paddingTop: '20px'}}>
                         <StyledRouterLinkWrapper to={'/login'} linkName={"Log in"} p={"home-link"}/>
                         <StyledRouterLinkWrapper to={'/register'} linkName={"Sign up"} p={"home-link"}/>
                     </FlexBox>
