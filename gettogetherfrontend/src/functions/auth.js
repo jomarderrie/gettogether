@@ -9,3 +9,13 @@ export const createUser = async (name, email, password, terms) => {
         }
     );
 }
+
+export const loginWithEmail = async (email,password) =>{
+    return await axios.post(`http://localhost:8000/api/user/login`, { email, password}, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+}

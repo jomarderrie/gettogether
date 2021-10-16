@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import ReCAPTCHA from "react-google-recaptcha";
 import {FlexBox} from "../../styled/styles";
 import styled from "styled-components";
+import {FlexBoxContainerInput} from "../../styled/input";
 
 
 
@@ -149,7 +150,7 @@ export default function SignUpForm() {
             {/*{errors.terms && <p className={"error"}>{errors.terms.message}</p>}*/}
 
             <FlexBoxContainerInput z={"column"}>
-                <button type="submit" className={"register-btn"}>
+                <button type="submit" className={"submit-auth-btn"}>
                     Register
                 </button>
                 <p>When you "Continue", you agree to GetTogether's Terms of Service. We will manage information about
@@ -162,37 +163,5 @@ export default function SignUpForm() {
 // width420
 
 
-const FlexBoxContainerInput = styled(FlexBox)`
-  width: 640px;
-  padding: 10px;
 
-  .checkbox {
-    padding-left: 20px;
-  }
-
-  label {
-    color: #aba499;
-  }
-
-  .error {
-    font-size: 14px;
-    color: red;
-  }
-
-  .register-btn {
-    width: 100%;
-    padding: 4px;
-    font-size: 24px;
-  }
-
-  input {
-    padding: 10px 8px;
-    font-size: 20px;
-  }
-
-  p {
-    font-size: 10px;
-    padding: 10px 0px;
-  }
-`
 
