@@ -85,7 +85,6 @@ export default function SignUpForm() {
                 <input
                     {...register("lastName", {
                         required: "This is required",
-                        maxLength: {value: 16, message: "You exceeded the max length"}
                     })}
                 />
                 {errors.lastName && <p className={"error"}>{errors.lastName.message}</p>}
@@ -99,11 +98,7 @@ export default function SignUpForm() {
 
                     {...register("email", {
                         required: "This is required",
-                        pattern: (value) => {
-                            return (
-                                new RegExp("^[^@\\s]+@[^@\\s\\.]+\\.[^@\\.\\s]+$").test(value)
-                            );
-                        },
+
                         minLength: {value: 6, message: "Valid email"}
                     })}
                 />
@@ -122,32 +117,26 @@ export default function SignUpForm() {
                             value: 8,
                             message: "must be 8 chars",
                         },
-                        validate: (value) => {
-                            return !([/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
-                                    pattern.test(value)
-                                ) || "must include lower, upper, number, and special chars"
-                            );
-                        },
                     })}
                 />
                 {errors.password && <p className={"error"}>{errors.password.message}</p>}
             </FlexBoxContainerInput>
 
 
-            {/*<FlexBoxContainerInput z={"row"} x={"flex-start"}>*/}
-            {/*    <input*/}
-            {/*        type="checkbox"*/}
-            {/*        className={"checkbox-input"}*/}
-            {/*        {...register("terms", {required: "This is required"})}*/}
+            <FlexBoxContainerInput z={"row"} x={"flex-start"}>
+                <input
+                    type="checkbox"
+                    className={"checkbox-input"}
+                    {...register("terms", {required: "This is required"})}
 
-            {/*        // type="checkbox"*/}
-            {/*        // name="terms"*/}
-            {/*        // id="terms"*/}
-            {/*        // ref={register({ required: "you must agree to terms" })}*/}
-            {/*    />*/}
-            {/*    <label htmlFor="terms" style={{paddingLeft: "20px"}}>You must agree to our terms.</label>*/}
-            {/*</FlexBoxContainerInput>*/}
-            {/*{errors.terms && <p className={"error"}>{errors.terms.message}</p>}*/}
+                    // type="checkbox"
+                    // name="terms"
+                    // id="terms"
+                    // ref={register({ required: "you must agree to terms" })}
+                />
+                <label htmlFor="terms" style={{paddingLeft: "20px"}}>You must agree to our terms.</label>
+            </FlexBoxContainerInput>
+            {errors.terms && <p className={"error"}>{errors.terms.message}</p>}
 
             <FlexBoxContainerInput z={"column"}>
                 <button type="submit" className={"submit-auth-btn"}>
