@@ -4,6 +4,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import {FlexBox} from "../../styled/styles";
 import styled from "styled-components";
 import {FlexBoxContainerInput} from "../../styled/input";
+import {createUser} from "../../functions/auth";
 
 
 
@@ -23,7 +24,20 @@ export default function SignUpForm() {
     return (
         <form
             onSubmit={handleSubmit((data) => {
+                setSubmitting(true);
+                setServerErrors([]);
+                const resp = createUser(data.firstName,data.lastName, data.email, data.password, data.terms).then((res,err) =>{
+                    if (res.data){
+                        console.log(res.data)
+                    }else{
+                        console.log(res)
+                        console.log(err)
+                    }
+                })
                 console.log(data);
+
+
+                setSubmitting(false);
             })}
             // onSubmit={handleSubmit( (formData) => {
             // console.log(formData)

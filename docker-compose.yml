@@ -41,3 +41,6 @@
       - ./gettogetherfrontend/node_modules:/gettogetherfrontend/node_modules
     ports:
       - 3000:3000
+networks:
+  webnet:
+    driver: bridge

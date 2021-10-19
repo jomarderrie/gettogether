@@ -11,10 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import com.nathan.gettogetherbackend.exception.user.*;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +24,7 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
+import static com.nathan.gettogetherbackend.constant.Role.ROLE_USER;
 import static com.nathan.gettogetherbackend.constant.UserImplConstant.*;
 
 @Service
@@ -29,6 +32,7 @@ import static com.nathan.gettogetherbackend.constant.UserImplConstant.*;
 @Qualifier("userDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
+    private BCryptPasswordEncoder passwordEncoder;
     private UserRepo userRepository;
 
     @Autowired
@@ -54,16 +58,33 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Override
-    public User register(UserRegisterDto userRegisterDto)  {
-        validateEmailRegister(userRegisterDto.getEmail());
-        User user = new User();
-
-        return null;
+    public User register(UserRegisterDto userRegisterDto) throws EmailExistException {
+        User foundUser = validateEmailRegister(userRegisterDto.getEmail());
+        if (foundUser != null) {
+            User user = new User();
+            user.setPassword(userRegisterDto.getPassword());
+            user.setFirstName(userRegisterDto.getFirstName());
+            user.setLastName(userRegisterDto.getLastName());
+            user.setEmail(userRegisterDto.getEmail());
+            user.setJoinDate(new Date());
+            user.setPassword(encodePassword(userRegisterDto.getPassword()));
+            user.setRole(ROLE_USER.name());
+            user.setAuthorities(ROLE_USER.getAuthorities());
+            userRepository.save(user);
+            LOGGER.info("New user : " + userRegisterDto.getEmail());
+            return user;
+        } else {
+            throw new EmailExistException("Email already exists");
+        }
     }
 
     @Override
     public List<User> getUsers() {
         return null;
+    }
+
+    private String encodePassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
 
@@ -72,13 +93,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findUserByEmail(email);
     }
 
-    private User validateEmailRegister(String newEmail)  {
+    private User validateEmailRegister(String newEmail) {
         User userByEmail = findUserByEmail(newEmail);
         if (userByEmail != null) {
-            //email exits
             return userByEmail;
         } else {
-            //email doent exist
             return null;
         }
 //        if (StringUtils.isNotBlank(currentUsername)) {
