@@ -1,7 +1,7 @@
 package com.nathan.gettogetherbackend.models;
 
 import lombok.Data;
-import org.assertj.core.internal.bytebuddy.implementation.bytecode.StackManipulation;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 
 @Data
 @Entity
@@ -19,7 +20,7 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @NotNull(message = "{hoaxify.constraints.username.NotNull.message}")
+    @NotNull(message = "not null")
     @Size(min = 4, max=255)
 
     private String username;
