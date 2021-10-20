@@ -1,6 +1,5 @@
 package org.springframework.controller;
 
-import com.nathan.gettogetherbackend.models.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
